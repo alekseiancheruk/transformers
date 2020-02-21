@@ -27,7 +27,7 @@ def normalize_answer(s):
 
     def deaccent_all(text):
         return deaccent(text)
-    
+
     def remove_noise(text):
         regex = re.compile(r"\b(a|an|the)\b", re.UNICODE)
         cleaned_art = re.sub(regex, " ", text)
@@ -45,7 +45,7 @@ def normalize_answer(s):
     def lower(text):
         return text.lower()
 
-    return white_space_fix(remove_articles(remove_punc(lower(s))))
+    return white_space_fix(remove_noise(remove_punc(lower(deaccent_all(s)))))
 
 
 def get_tokens(s):
