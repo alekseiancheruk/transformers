@@ -33,7 +33,7 @@ def normalize_answer(s):
         cleaned_art = re.sub(regex, " ", text)
         stoplist = nltk.corpus.stopwords.words('french')
         cleaned = [w for w in cleaned_art.split() if w not in stoplist]
-        return cleaned
+        return " ".join(cleaned)
 
     def white_space_fix(text):
         return " ".join(text.split())
