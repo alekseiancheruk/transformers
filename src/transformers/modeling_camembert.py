@@ -25,6 +25,7 @@ from .modeling_roberta import (
     RobertaForMultipleChoice,
     RobertaForSequenceClassification,
     RobertaForTokenClassification,
+    RobertaForQuestionAnswering,
     RobertaModel,
 )
 
@@ -119,5 +120,18 @@ class CamembertForTokenClassification(RobertaForTokenClassification):
     superclass for the appropriate documentation alongside usage examples.
     """
 
+    config_class = CamembertConfig
+    pretrained_model_archive_map = CAMEMBERT_PRETRAINED_MODEL_ARCHIVE_MAP
+
+@add_start_docstrings(
+    """CamemBERT Model with a span classification head on top for extractive question-answering tasks like SQuAD
+    (a linear layers on top of the hidden-states output to compute `span start logits` and `span end logits` """,
+    CAMEMBERT_START_DOCSTRING,
+)
+class CamembertForQuestionAnswering(RobertaForQuestionAnswering):
+    """
+    This class overrides :class:`~transformers.RobertaForQuestionAnswering`. Please check the
+    superclass for the appropriate documentation alongside usage examples.
+    """
     config_class = CamembertConfig
     pretrained_model_archive_map = CAMEMBERT_PRETRAINED_MODEL_ARCHIVE_MAP
