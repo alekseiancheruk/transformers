@@ -7,13 +7,14 @@ This file is expected to map question ID's to the model's predicted probability
 that a question is unanswerable.
 """
 
-
+from gensim.utils import deaccent
 import collections
 import json
 import logging
 import math
 import re
 import string
+import nltk
 
 from transformers.tokenization_bert import BasicTokenizer
 
@@ -24,9 +25,15 @@ logger = logging.getLogger(__name__)
 def normalize_answer(s):
     """Lower text and remove punctuation, articles and extra whitespace."""
 
-    def remove_articles(text):
+    def deaccent_all(text):
+        return deaccent(text)
+    
+    def remove_noise(text):
         regex = re.compile(r"\b(a|an|the)\b", re.UNICODE)
-        return re.sub(regex, " ", text)
+        cleaned_art = re.sub(regex, " ", text)
+        stoplist = nltk.corpus.stopwords.words('french')
+        cleaned = [w for w in cleaned_art.split() if w not in stoplist]
+        return cleaned
 
     def white_space_fix(text):
         return " ".join(text.split())
